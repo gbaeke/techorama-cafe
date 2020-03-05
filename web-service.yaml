@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cn-web-svc
+  labels:
+    app: cn-web
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: cn-web
+  sessionAffinity: ClientIP

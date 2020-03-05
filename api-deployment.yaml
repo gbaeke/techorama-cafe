@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cn-api
+  labels:
+    app: cn-api
+spec:
+  selector:
+    matchLabels:
+      app: cn-api
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: cn-api
+    spec:
+      containers:
+      - name: api
+        imagePullPolicy: Always
+        image: djohnnie/csharpwars-cloudnative-api:1.0.0
+        env:
+        - name: KEY_VAULT
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-key-vault
+                key: KEY_VAULT
+        - name: CERTIFICATE_KEY
+          value: ""
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-client-id
+                key: CLIENT_ID
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-client-secret
+                key: CLIENT_SECRET         
+        resources:
+          requests:
+            cpu: 250m
+            memory: 50Mi
+          limits:
+            cpu: 1000m
+            memory: 200Mi
+        ports:
+        - containerPort: 5000

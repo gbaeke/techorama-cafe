@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cn-web
+  labels:
+    app: cn-web
+spec:
+  selector:
+    matchLabels:
+      app: cn-web
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: cn-web
+    spec:
+      containers:
+      - name: web
+        imagePullPolicy: Always
+        image: djohnnie/csharpwars-cloudnative-web:1.0.0
+        env:
+        - name: KEY_VAULT
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-key-vault
+                key: KEY_VAULT
+        - name: CERTIFICATE_KEY
+          value: ""
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-client-id
+                key: CLIENT_ID
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+                name: csharpwars-client-secret
+                key: CLIENT_SECRET 
+        env:
+        - name: VALIDATION_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: validation-host
+              key: VALIDATION_HOST     
+        resources:
+          requests:
+            cpu: 250m
+            memory: 50Mi
+          limits:
+            cpu: 1000m
+            memory: 200Mi
+        ports:
+        - containerPort: 5000

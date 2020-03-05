@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cn-api-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/affinity: cookie
+spec:
+  tls:
+  - hosts:
+    - csharpwars-api.baeke.info
+    secretName: csharpwars-api-baeke-info-tls
+  rules:
+  - host: csharpwars-api.baeke.info
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: cn-api-svc
+          servicePort: 5000
