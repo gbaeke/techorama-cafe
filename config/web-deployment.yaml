@@ -36,7 +36,6 @@ spec:
             secretKeyRef:
                 name: csharpwars-client-secret
                 key: CLIENT_SECRET 
-        env:
         - name: VALIDATION_HOST
           valueFrom:
             configMapKeyRef:
