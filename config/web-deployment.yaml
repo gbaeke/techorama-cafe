@@ -4,6 +4,7 @@ metadata:
   name: cn-web
   labels:
     app: cn-web
+    environment: production
 spec:
   selector:
     matchLabels:
