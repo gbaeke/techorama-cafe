@@ -45,7 +45,7 @@ data:
         #fielddrop = ["metric_to_drop"]
 
         # An array of urls to scrape metrics from.
-        urls = ["http://cn-api-svc.default:80/metrics"]
+        #urls = ["http://cn-api-svc.default:5000/metrics"]
 
         # An array of Kubernetes services to scrape metrics from.
         # kubernetes_services = ["http://my-service-dns.my-namespace:9102/metrics"]
